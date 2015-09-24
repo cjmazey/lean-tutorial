@@ -1,3 +1,5 @@
+/- page 25 -/
+
 import standard
 namespace foo
 constant A : Type

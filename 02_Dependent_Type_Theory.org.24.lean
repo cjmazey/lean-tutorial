@@ -1,3 +1,5 @@
+/- page 22 -/
+
 import standard
 variables (A B C : Type)
 variables (g : B → C) (f : A → B) (h : A → A)

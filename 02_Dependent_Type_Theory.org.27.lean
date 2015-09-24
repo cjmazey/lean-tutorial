@@ -1,3 +1,5 @@
+/- page 24 -/
+
 import standard
 import data.nat   -- imports the nat module
 

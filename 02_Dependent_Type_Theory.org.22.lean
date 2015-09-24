@@ -1,3 +1,5 @@
+/- page 22 -/
+
 import standard
 definition compose (A B C : Type) (g : B → C) (f : A → B) (x : A) :
 C := g (f x)
