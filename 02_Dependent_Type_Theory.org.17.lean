@@ -1,3 +1,5 @@
+/- page 20 -/
+
 import standard
 import data.nat
 open nat
@@ -25,3 +27,27 @@ eval square 3    -- 9
 definition do_twice (f : nat → nat) (x : nat) : nat := f (f x)
 
 eval do_twice double 2    -- 8
+
+definition quadruple := do_twice double
+print quadruple
+check quadruple 9
+eval quadruple 9
+
+open function
+definition octuple := double ∘ do_twice double
+print octuple
+check octuple 9
+eval octuple 9
+
+definition Do_Twice : ((ℕ → ℕ) → (ℕ → ℕ)) → (ℕ → ℕ) → (ℕ -> ℕ) :=
+   λ f, f ∘ f
+/-
+   Do_Twice do_twice double 2 ⟹
+   (do_twice ∘ do_twice) double 2 ⟹
+   do_twice (do_twice double) 2 ⟹
+   do_twice (double ∘ double) 2 ⟹
+   ((double ∘ double) ∘ (double ∘ double)) 2 ⟹
+   double (double (double (double 2))) ⟹
+   32
+-/
+eval Do_Twice do_twice double 2

@@ -1,3 +1,5 @@
+/- page 12 -/
+
 import standard
 import standard
 open bool nat
@@ -30,4 +32,3 @@ check F f             -- ℕ
 -- END
 
 -- Write down some types, declare some constants, and check some expressions.
-

@@ -1,3 +1,5 @@
+/- page 15 -/
+
 import standard
 constants A B : Type
 check A              -- A : Type

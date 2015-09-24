@@ -1,3 +1,5 @@
+/- page 18 -/
+
 import standard
 constants A B C : Type
 constant f : A → B

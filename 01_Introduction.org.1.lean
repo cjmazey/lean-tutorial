@@ -1,3 +1,5 @@
+/- page 9 -/
+
 import standard
 -- BEGIN
 theorem and_commutative (p q : Prop) : p ∧ q → q ∧ p :=
