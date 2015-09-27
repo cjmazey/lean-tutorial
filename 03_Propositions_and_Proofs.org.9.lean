@@ -1,3 +1,5 @@
+/- page 36 -/
+
 import standard
 constants p q : Prop
 

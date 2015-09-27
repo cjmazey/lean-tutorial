@@ -1,3 +1,5 @@
+/- page 41 -/
+
 import standard
 variables p q r : Prop
 -- BEGIN
