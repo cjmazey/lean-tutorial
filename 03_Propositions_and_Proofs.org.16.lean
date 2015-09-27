@@ -1,3 +1,5 @@
+/- page 38 -/
+
 import standard
 variables p q r s : Prop
 premises (H1 : q → r) (H2 : p → q)
