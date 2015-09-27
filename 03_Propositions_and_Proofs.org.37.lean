@@ -6,8 +6,11 @@ open classical
 variables p q r s : Prop
 
 -- commutativity of ∧ and ∨
-example : p ∧ q ↔ q ∧ p := sorry
-example : p ∨ q ↔ q ∨ p := sorry
+example : p ∧ q ↔ q ∧ p :=
+  iff.intro and.swap and.swap
+
+example : p ∨ q ↔ q ∨ p :=
+  iff.intro or.swap or.swap
 
 -- associativity of ∧ and ∨
 example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := sorry
