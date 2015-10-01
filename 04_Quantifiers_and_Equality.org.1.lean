@@ -1,3 +1,5 @@
+/- page 48 -/
+
 import standard
 variables (A : Type) (p q : A → Prop)
 
