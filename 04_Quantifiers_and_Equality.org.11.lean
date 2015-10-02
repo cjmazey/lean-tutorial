@@ -1,3 +1,5 @@
+/- page 51 -/
+
 import standard
 variables (A : Type) (a b c d : A)
 premises (Hab : a = b) (Hcb : c = b) (Hcd : c = d)

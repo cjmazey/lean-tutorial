@@ -1,3 +1,5 @@
+/- page 51 -/
+
 import standard
 check eq.refl    -- ∀ (a : ?A), a = a
 check eq.symm    -- ?a = ?b → ?b = ?a
