@@ -6,15 +6,12 @@ open classical
 variables (A : Type) (p q : A → Prop)
 variable r : Prop
 
--- constructive
 example : (∃ x : A, r) → r :=
   λ H, exists.elim H (λ x Hr, Hr)
 
--- constructive
 example (a : A) : r → (∃ x : A, r) :=
   λ Hr, exists.intro a Hr
 
--- constructive
 example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
   iff.intro (assume H,
              obtain (w : A) (Hw : p w ∧ r), from H,
@@ -24,7 +21,6 @@ example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
              obtain (w : A) (Hw : p w), from and.left H,
              exists.intro w (and.intro Hw (and.right H)))
 
--- constructive
 example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
   iff.intro (assume H,
              obtain (w : A) (Hw : p w ∨ q w), from H,
@@ -39,11 +35,57 @@ example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
                         exists.intro w (or.inr Hw)))
 
 
-example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry
-example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := sorry
-example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
-example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
+-- nonconstructive (←)
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
+  iff.intro (assume H H',
+             obtain (w : A) (Hnw : ¬ p w), from H',
+             absurd (H w) Hnw)
+            (assume H,
+             take x : A,
+             by_contradiction (assume Hnx : ¬ p x,
+                               absurd (exists.intro x Hnx) H))
 
+-- nonconstructive
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) :=
+   iff.intro
+      (assume H : ∃ x, p x,
+       assume H' : ∀ x, ¬ p x,
+       obtain (w : A) (Hpw : p w), from H,
+       have Hnpw : ¬ p w, from H' w, absurd Hpw Hnpw)
+      (assume H : ¬ (∀ x, ¬ p x),
+       by_contradiction
+          (assume H1 : ¬ Exists p,
+           have H2 : ∀ x, ¬ p x,
+           from
+              take x,
+              assume H3 : p x,
+              have H4 : ∃ x, p x, from exists.intro x H3,
+              show false, from H1 H4,
+           show false, from H H2))
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
+   iff.intro
+      (assume H : ¬ ∃ x, p x,
+       take x : A,
+       assume Hpx : p x,
+       have H' : ∃ x, p x, from exists.intro x Hpx,
+       absurd H' H)
+      (assume H : ∀ x, ¬ p x,
+       assume H' : ∃ x, p x,
+       obtain (w : A) (Pw : p w), from H',
+       absurd Pw (H w))
+
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
+   iff.intro
+      (assume H : ¬ ∀ x, p x,
+       by_contradiction
+          (assume H1 : ¬ ∃ x, ¬ p x,
+           have H2 : ∀ x, p x,
+           from
+              take x : A,
+              _,
+           _))
+      _
 
 example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
 example (a : A) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
