@@ -103,5 +103,25 @@ example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
              assume Hpx : p x,
              show r, from H (exists.intro x Hpx))
 
-example (a : A) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
-example (a : A) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
+-- nonconstructive (←)
+example (a : A) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
+  iff.intro (assume H₁ : ∃ x, p x → r,
+             assume H₂ : ∀ x, p x,
+             obtain (w : A) (Pw : p w → r), from H₁,
+             Pw (H₂ w))
+            (assume H : (∀ x, p x) → r,
+             _)
+
+-- nonconstructive (←)
+example (a : A) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
+  iff.intro (assume H : ∃ x, r → p x,
+             assume Hr : r,
+             obtain (x : A) (Px : r → p x), from H,
+             exists.intro x (Px Hr))
+            (assume H : r → ∃ x, p x,
+             or.elim (em r) (assume Hr : r,
+                             obtain (x : A) (Px : p x), from H Hr,
+                             exists.intro x (assume Hr, Px))
+                            (assume Hnr : ¬ r,
+                             exists.intro a (assume Hr : r,
+                                             absurd Hr Hnr)))
