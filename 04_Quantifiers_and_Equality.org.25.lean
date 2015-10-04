@@ -93,6 +93,15 @@ example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
        absurd (H₂ w) Hnpw)
 
 
-example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
+  iff.intro (assume H₁ : ∀ x, p x → r,
+             assume H₂ : ∃ x, p x,
+             obtain (w : A) (Hpw : p w), from H₂,
+             show r, from H₁ w Hpw)
+            (assume H : (∃ x, p x) → r,
+             take x : A,
+             assume Hpx : p x,
+             show r, from H (exists.intro x Hpx))
+
 example (a : A) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
 example (a : A) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
