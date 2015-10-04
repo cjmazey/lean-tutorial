@@ -75,17 +75,23 @@ example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
        obtain (w : A) (Pw : p w), from H',
        absurd Pw (H w))
 
+-- nonconstructive (→)
 example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) :=
    iff.intro
-      (assume H : ¬ ∀ x, p x,
+      (assume H₁ : ¬ ∀ x, p x,
        by_contradiction
-          (assume H1 : ¬ ∃ x, ¬ p x,
-           have H2 : ∀ x, p x,
+          (assume H₂ : ¬ ∃ x, ¬ p x,
+           have H₃ : ∀ x, p x,
            from
               take x : A,
-              _,
-           _))
-      _
+              or.elim (em (p x)) (λ Hpx, Hpx)
+                                 (λ Hnpx, absurd (exists.intro x Hnpx) H₂),
+           absurd H₃ H₁))
+      (assume H₁ : ∃ x, ¬ p x,
+       assume H₂ : ∀ x, p x,
+       obtain (w : A) (Hnpw : ¬ p w), from H₁,
+       absurd (H₂ w) Hnpw)
+
 
 example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
 example (a : A) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
