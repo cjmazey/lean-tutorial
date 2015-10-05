@@ -109,8 +109,24 @@ example (a : A) : (∃ x, p x → r) ↔ (∀ x, p x) → r :=
              assume H₂ : ∀ x, p x,
              obtain (w : A) (Pw : p w → r), from H₁,
              Pw (H₂ w))
-            (assume H : (∀ x, p x) → r,
-             _)
+            (assume H₁ : (∀ x, p x) → r,
+             by_cases (assume H₂ : ∀ x, p x,
+                       exists.intro a (assume Hpa : p a,
+                                       H₁ H₂))
+                      (assume H₂ : ¬ ∀ x, p x,
+                       by_contradiction
+                       (assume H₃ : ¬ ∃ x, p x → r,
+                        have H₄ : ∀ x, p x,
+                        from
+                           take x,
+                           by_contradiction
+                           assume Hnpx : ¬ p x,
+                           have H₅ : ∃ x, p x → r,
+                           from
+                              exists.intro x (assume Hpx : p x,
+                                              absurd Hpx Hnpx),
+                           absurd H₅ H₃,
+                        absurd H₄ H₂)))
 
 -- nonconstructive (←)
 example (a : A) : (∃ x, r → p x) ↔ (r → ∃ x, p x) :=
