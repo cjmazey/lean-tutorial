@@ -1,3 +1,5 @@
+/- page 60 -/
+
 import standard
 definition imp_self (p : Prop) : p → p :=
 assume `p`, `p`
