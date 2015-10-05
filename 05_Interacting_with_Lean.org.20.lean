@@ -1,3 +1,5 @@
+/- page 74 -/
+
 import standard
 import data.bool data.nat
 open bool nat

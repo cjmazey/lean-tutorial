@@ -1,3 +1,5 @@
+/- page 66 -/
+
 import standard
 import standard algebra.ordered_ring
 open nat algebra

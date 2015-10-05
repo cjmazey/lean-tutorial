@@ -1,3 +1,5 @@
+/- page 73 -/
+
 import standard
 import data.nat data.int
 open nat int
