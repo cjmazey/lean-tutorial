@@ -1,3 +1,5 @@
+/- page 83 -/
+
 import standard
 structure Semigroup : Type :=
 (carrier : Type)
