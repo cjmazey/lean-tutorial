@@ -1,3 +1,5 @@
+/- page 79 -/
+
 import standard
 inductive weekday : Type :=
 | sunday : weekday
