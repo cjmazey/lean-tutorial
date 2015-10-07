@@ -58,7 +58,7 @@ m + succ n = succ (m + n) : rfl
 
 -- BEGIN
 -- define mul by recursion on the second argument
-definition mul (m n : nat) : nat := /-sorry-/
+definition mul (m n : nat) : nat :=
   nat.rec_on n 0 (λ n mul_m_n, m + mul_m_n)
 notation 1 := succ 0
 notation 2 := succ 1
@@ -69,13 +69,13 @@ eval mul 3 2
 infix `*` := mul
 
 -- these should be proved by rfl
-theorem mul_zero (m : nat) : m * 0 = 0 := /-sorry-/
+theorem mul_zero (m : nat) : m * 0 = 0 :=
   rfl
 
-theorem mul_succ (m n : nat) : m * (succ n) = m * n + m := /-sorry-/
+theorem mul_succ (m n : nat) : m * (succ n) = m * n + m :=
   eq.subst (add_comm m (m * n)) rfl
 
-theorem zero_mul (n : nat) : 0 * n = 0 := /-sorry-/
+theorem zero_mul (n : nat) : 0 * n = 0 :=
   induction_on n
                rfl
                (λ n IH,
@@ -83,7 +83,17 @@ theorem zero_mul (n : nat) : 0 * n = 0 := /-sorry-/
                                ... = 0 + 0 : IH
                                ... = 0 : rfl))
 
-theorem mul_distrib (m n k : nat) : m * (n + k) = m * n + m * k := sorry
+theorem mul_distrib (m n k : nat) : m * (n + k) = m * n + m * k :=
+  induction_on n
+               (calc m * (0 + k) = m * k : zero_add
+                             ... = 0 + m * k : zero_add
+                             ... = m * 0 + m * k : rfl)
+               (λ n IH,
+                  calc m * (succ n + k) = m * succ (n + k) : succ_add
+                                    ... = m + (m * (n + k)) : rfl
+                                    ... = m + (m * n + m * k) : IH
+                                    ... = m + (m * n) + m * k : add_assoc
+                                    ... = m * (succ n) + m * k : rfl)
 
 theorem mul_assoc (m n k : nat) : m * n * k = m * (n * k) := sorry
 
