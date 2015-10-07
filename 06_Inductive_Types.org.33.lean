@@ -105,7 +105,26 @@ theorem mul_assoc (m n k : nat) : m * n * k = m * (n * k) :=
                                     ... = m * (n * succ k) : rfl)
 
 -- hint: you will need to prove an auxiliary statement
-theorem mul_comm (m n : nat) : m * n = n * m := sorry
+lemma succ_mul (m n : nat) : succ m * n = n + m * n :=
+  induction_on n
+               rfl
+               (λ n IH,
+                  calc succ m * succ n = succ m + succ m * n : rfl
+                                   ... = succ m + (n + m * n) : IH
+                                   ... = (succ m + n) + m * n : add_assoc
+                                   ... = succ (m + n) + m * n : succ_add
+                                   ... = m + succ n + m * n : rfl
+                                   ... = succ n + m + m * n : add_comm
+                                   ... = succ n + (m + m * n) : add_assoc
+                                   ... = succ n + m * succ n : rfl)
+
+theorem mul_comm (m n : nat) : m * n = n * m :=
+  induction_on n
+               (eq.subst !zero_mul rfl)
+               (λ n IH,
+                    calc m * succ n = m + m * n : rfl
+                                ... = m + n * m : IH
+                                ... = succ n * m : succ_mul)
 
 definition pred (n : nat) : nat := nat.cases_on n zero (fun n, n)
 
