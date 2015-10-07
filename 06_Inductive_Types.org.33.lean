@@ -95,7 +95,14 @@ theorem mul_distrib (m n k : nat) : m * (n + k) = m * n + m * k :=
                                     ... = m + (m * n) + m * k : add_assoc
                                     ... = m * (succ n) + m * k : rfl)
 
-theorem mul_assoc (m n k : nat) : m * n * k = m * (n * k) := sorry
+theorem mul_assoc (m n k : nat) : m * n * k = m * (n * k) :=
+  induction_on k
+               rfl
+               (λ k IH,
+                  calc m * n * (succ k) = m * n + m * n * k : rfl
+                                    ... = m * n + m * (n * k) : IH
+                                    ... = m * (n + n * k) : mul_distrib
+                                    ... = m * (n * succ k) : rfl)
 
 -- hint: you will need to prove an auxiliary statement
 theorem mul_comm (m n : nat) : m * n = n * m := sorry
