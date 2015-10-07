@@ -69,10 +69,19 @@ eval mul 3 2
 infix `*` := mul
 
 -- these should be proved by rfl
-theorem mul_zero (m : nat) : m * 0 = 0 := sorry
-theorem mul_succ (m n : nat) : m * (succ n) = m * n + m := sorry
+theorem mul_zero (m : nat) : m * 0 = 0 := /-sorry-/
+  rfl
 
-theorem zero_mul (n : nat) : 0 * n = 0 := sorry
+theorem mul_succ (m n : nat) : m * (succ n) = m * n + m := /-sorry-/
+  eq.subst (add_comm m (m * n)) rfl
+
+theorem zero_mul (n : nat) : 0 * n = 0 := /-sorry-/
+  induction_on n
+               rfl
+               (λ n IH,
+                  (calc 0 * succ n = 0 + 0 * n : rfl
+                               ... = 0 + 0 : IH
+                               ... = 0 : rfl))
 
 theorem mul_distrib (m n k : nat) : m * (n + k) = m * n + m * k := sorry
 
