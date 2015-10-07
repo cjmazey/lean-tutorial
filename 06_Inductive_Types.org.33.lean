@@ -58,7 +58,13 @@ m + succ n = succ (m + n) : rfl
 
 -- BEGIN
 -- define mul by recursion on the second argument
-definition mul (m n : nat) : nat := sorry
+definition mul (m n : nat) : nat := /-sorry-/
+  nat.rec_on n 0 (λ n mul_m_n, m + mul_m_n)
+notation 1 := succ 0
+notation 2 := succ 1
+notation 3 := succ 2
+eval mul 2 3
+eval mul 3 2
 
 infix `*` := mul
 
