@@ -35,6 +35,25 @@ list.induction_on r
                      calc (x :: xs) ++ s ++ t = x :: (xs ++ s ++ t) : rfl
                                           ... = x :: (xs ++ (s ++ t)) : IH
                                           ... = (x :: xs) ++ (s ++ t) : rfl)
+
+section length
+  open nat
+
+  definition length : list A → ℕ :=
+    list.rec 0 (λ x xs n, succ n)
+
+  example (s t : list A) : length (s ++ t) = length s + length t :=
+  list.induction_on s
+                    (calc length (nil ++ t) = length t : rfl
+                                        ... = 0 + length t : nat.zero_add
+                                        ... = length nil + length t : rfl)
+                    (λ x xs IH,
+                       calc length (x :: xs ++ t) = length (x :: (xs ++ t)) : rfl
+                                              ... = succ (length (xs ++ t)) : rfl
+                                              ... = succ (length xs + length t) : IH
+                                              ... = succ (length xs) + length t : succ_add
+                                              ... = length (x :: xs) + length t : rfl)
+end length
 -- END
 
 end list
