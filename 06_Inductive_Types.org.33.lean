@@ -128,9 +128,14 @@ theorem mul_comm (m n : nat) : m * n = n * m :=
 
 definition pred (n : nat) : nat := nat.cases_on n zero (fun n, n)
 
-theorem pred_succ (n : nat) : pred (succ n) = n := sorry
+theorem pred_succ (n : nat) : pred (succ n) = n :=
+  rfl
 
-theorem succ_pred (n : nat) : n ≠ 0 → succ (pred n) = n := sorry
+theorem succ_pred (n : nat) : n ≠ 0 → succ (pred n) = n :=
+  nat.cases_on n
+               (λ H, absurd rfl H)
+               (λ n' H, rfl)
+
 -- END
 end nat
 
