@@ -1,3 +1,5 @@
+/- page 92 -/
+
 import standard
 namespace hide
 
@@ -13,10 +15,10 @@ theorem symm {A : Type} {a b : A} (H : eq a b) : eq b a :=
 subst H (eq.refl a)
 
 theorem trans {A : Type} {a b c : A} (H₁ : eq a b) (H₂ : eq b c) : eq a c :=
-sorry
+subst H₂ H₁
 
 theorem congr {A B : Type} {a b : A} (f : A → B) (H : eq a b) : eq (f a) (f b) :=
-sorry
+subst H (eq.refl (f a))
 -- END
 
 end hide
