@@ -1,3 +1,5 @@
+/- page 96 -/
+
 import standard
 variables (A : Type) (B : A → Type)
 variables (a1 a2 : A) (b1 : B a1) (b2 : B a2)
