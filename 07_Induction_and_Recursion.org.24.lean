@@ -1,3 +1,5 @@
+/- page 109 -/
+
 import standard
 import data.examples.vector
 open nat vector

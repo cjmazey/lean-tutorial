@@ -1,3 +1,5 @@
+/- page 107 -/
+
 import standard
 variables {A B : Type}
 inductive image_of (f : A → B) : B → Type :=

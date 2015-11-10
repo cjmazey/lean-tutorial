@@ -1,3 +1,5 @@
+/- page 105 -/
+
 import standard
 import data.examples.vector
 open nat vector prod

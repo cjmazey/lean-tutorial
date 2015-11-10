@@ -1,3 +1,5 @@
+/- page 106 -/
+
 import standard
 open nat
 
